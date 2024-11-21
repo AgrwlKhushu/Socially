@@ -37,9 +37,6 @@ const Login = () => {
 				type: "CLEAR_ERROR",
 			});
 		}
-		if (isAuthenticated) {
-			navigate('/');
-		}
 	}, [dispatch, message, error, isAuthenticated, navigate, id]);
 
 	return (

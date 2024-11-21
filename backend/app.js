@@ -5,12 +5,14 @@ import postRouter from "./routes/postRoute.js";
 import path from "path";
 // import ejs from "ejs";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 
 dotenv.config({ path: "./config/config.env" });
 
 const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json({ limit: "50mb" }));
+app.use(cookieParser());
 
 app.use(
 	cors({

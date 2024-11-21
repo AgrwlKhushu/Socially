@@ -10,11 +10,6 @@ import cloudinary from "cloudinary";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-let emailTemplate = fs.readFileSync(
-	path.join(__dirname, "../templates/mail.html"),
-	"utf-8"
-);
-
 export const registerUser = async (req, res) => {
 	try {
 		// parsing data
@@ -82,9 +77,14 @@ export const registerUser = async (req, res) => {
 		user.otpExpire = otpExpire;
 		await user.save();
 
+		let emailTemplate = fs.readFileSync(
+			path.join(__dirname, "../templates/mail.html"),
+			"utf-8"
+		);
+
 		// Email generation
 		const subject = "Verify your account";
-		// const body = `Your otp is ${otp}`;
+		
 		emailTemplate = emailTemplate.replace("{{OTP_CODE}}", otp);
 		emailTemplate = emailTemplate.replaceAll("{{MAIL}}", process.env.SMTP_USER);
 		emailTemplate = emailTemplate.replace("{{PORT}}", process.env.PORT);
@@ -252,9 +252,14 @@ export const resendOtp = async (req, res) => {
 		user.otpAttemptsExpire = undefined;
 		await user.save();
 
+		let emailTemplate = fs.readFileSync(
+			path.join(__dirname, "../templates/mail.html"),
+			"utf-8"
+		);
+
 		// send otp
 		const subject = "Verify your account";
-		// const body = `Your otp is ${otp}`;
+
 		emailTemplate = emailTemplate.replace("{{OTP_CODE}}", otp);
 		emailTemplate = emailTemplate.replace("{{PORT}}", process.env.PORT);
 		emailTemplate = emailTemplate.replace("{{USER_ID}}", user._id.toString());
@@ -322,9 +327,13 @@ export const loginUser = async (req, res) => {
 			Date.now() + process.env.LOGIN_OTP_EXPIRE * 60 * 1000
 		);
 
+		let emailTemplate = fs.readFileSync(
+			path.join(__dirname, "../templates/mail.html"),
+			"utf-8"
+		);
+
 		// Send otp
 		const subject = "Verify your account";
-		// const body = `Your OTP is ${otp}`;
 
 		emailTemplate = emailTemplate.replace("{{OTP_CODE}}", loginOtp);
 		emailTemplate = emailTemplate.replaceAll("{{MAIL}}", process.env.SMTP_USER);
@@ -460,9 +469,14 @@ export const resendLoginOtp = async (req, res) => {
 		user.loginOtpAttemptsExpire = undefined;
 		await user.save();
 
+		let emailTemplate = fs.readFileSync(
+			path.join(__dirname, "../templates/mail.html"),
+			"utf-8"
+		);
+		
 		// Send otp
 		const subject = "Verify your account";
-		const body = `Your OTP is ${otp}`;
+
 		emailTemplate = emailTemplate.replace("{{OTP_CODE}}", otp);
 		emailTemplate = emailTemplate.replaceAll("{{MAIL}}", process.env.SMTP_USER);
 		emailTemplate = emailTemplate.replace("{{PORT}}", process.env.PORT);

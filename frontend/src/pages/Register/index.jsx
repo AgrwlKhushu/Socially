@@ -73,9 +73,6 @@ const Register = () => {
 			toast.error(error, toastOptions);
 			dispatch({ type: "CLEAR_ERROR" });
 		}
-		if (isAuthenticated) {
-			navigate("/");
-		}
 	}, [dispatch, message, error, isAuthenticated, navigate, id]);
 
 	return (

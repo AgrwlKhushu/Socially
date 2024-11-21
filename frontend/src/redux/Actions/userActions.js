@@ -1,6 +1,8 @@
 import axios from "axios";
 import { BACKEND_URL } from "../../constants/url";
 
+axios.defaults.withCredentials = true;
+
 const URL = BACKEND_URL + "api/v1/user";
 
 export const loginUser = (email, password) => async (dispatch) => {
@@ -166,23 +168,18 @@ export const loadUser = () => async (dispatch) => {
 		dispatch({
 			type: "LOAD_USER_REQUEST",
 		});
-
-		const { data } = await axios.get(`${URL}/my/profile`);
-
-		console.log(data);
-
+		const { data } = await axios.get(`${URL}/me`);
 		dispatch({
 			type: "LOAD_USER_SUCCESS",
 			payload: data.data,
 		});
-	}
-	catch (error) {
+	} catch (error) {
 		dispatch({
 			type: "LOAD_USER_FAILURE",
-			payload: error.message?.data?.message,
+			payload: error.response?.data?.message,
 		});
 	}
-}
+};
 
 // export const logoutUser = () => async (dispatch) => {
 //     try {

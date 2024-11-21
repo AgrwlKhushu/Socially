@@ -32,6 +32,7 @@ const loadUserFailure = createAction("LOAD_USER_FAILURE");
 
 
 const clearError = createAction("CLEAR_ERROR");
+const clearAuthError = createAction("CLEAR_AUTH_ERROR");
 const clearMessage = createAction("CLEAR_MESSAGE");
 
 export const userAuthReducer = createReducer(initialState, (builder) => {
@@ -109,18 +110,23 @@ export const userAuthReducer = createReducer(initialState, (builder) => {
 			state.error = action.payload;
 		})
 		.addCase(loadUserRequest, (state) => {
-			state.loading = true;
+			state.userLoading = true;
 		})
 		.addCase(loadUserSuccess, (state, action) => {
-			state.loading = false;
-			state.isAuthenticated = action.payload;
+			state.userLoading = false;
+			state.user = action.payload;
+			state.isAuthenticated = true;
 		})
 		.addCase(loadUserFailure, (state, action) => {
-			state.loading = false;
-			state.error = action.payload;
+			state.userLoading = false;
+			state.authError = action.payload;
+			state.isAuthenticated = false;
 		})
 		.addCase(clearError, (state) => {
 			state.error = null;
+		})
+		.addCase(clearAuthError, (state) => {
+			state.authError = null;
 		})
 		.addCase(clearMessage, (state) => {
 			state.message = null;

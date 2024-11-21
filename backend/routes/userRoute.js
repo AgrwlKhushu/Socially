@@ -28,7 +28,7 @@ userRouter.get("/login/resend/:id", resendLoginOtp);
 
 userRouter.get("/logout", isAuthenticated, logoutUser);
 
-userRouter.get("/my/profile", isAuthenticated, myProfile);
+userRouter.get("/me", isAuthenticated, myProfile);
 
 userRouter.patch("/update/profile", isAuthenticated, updateUser);
 

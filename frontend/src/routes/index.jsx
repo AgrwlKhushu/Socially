@@ -8,29 +8,12 @@ import LoginOtp from "../pages/Otp/LoginOtp";
 import VerifyOtp from "../pages/Otp/VerifyOtp";
 import { useDispatch, useSelector } from "react-redux";
 import { loadUser } from "../redux/Actions/userActions";
+import ProtectedRoute from "./ProtectedRoute";
+import AuthRoute from "./AuthRoute";
 
 const Path = () => {
-	const [loading, setLoading] = useState(true);
-
 	const dispatch = useDispatch();
-
-	useEffect(() => {
-		setTimeout(() => {
-			setLoading(false);
-		}, 1000);
-	}, []);
-
-	const UserProfile = ({ id }) => {
-		const dispatch = useDispatch();
-
-		const { loading, message, error } = useSelector((state) => state.userAuth);
-
-		useEffect(() => {
-			if (id) {
-				dispatch(loadUser(id));
-			}
-		}, [dispatch, id]);
-	};
+	const { userLoading } = useSelector((state) => state.userAuth);
 
 	useEffect(() => {
 		dispatch(loadUser());
@@ -39,18 +22,50 @@ const Path = () => {
 	return (
 		<div>
 			<Router>
-				{loading ? (
-					<h1>
-						<LoadingPage />{" "}
-					</h1>
+				{userLoading ? (
+					<LoadingPage />
 				) : (
 					<Routes>
-						<Route path="/" element={<Home />} />
-						if(UserProfile) <Route path="/login" element={<Home />} />
-						else <Route path="/login" element={<Login />} />
-						<Route path="/register" element={<Register />} />
-						<Route path="/login/:id" element={<LoginOtp />} />
-						<Route path="/verify/:id" element={<VerifyOtp />} />
+						<Route
+							path="/"
+							element={
+								<ProtectedRoute>
+									<Home />
+								</ProtectedRoute>
+							}
+						/>
+						<Route
+							path="/login"
+							element={
+								<AuthRoute>
+									<Login />
+								</AuthRoute>
+							}
+						/>
+						<Route
+							path="/register"
+							element={
+								<AuthRoute>
+									<Register />
+								</AuthRoute>
+							}
+						/>
+						<Route
+							path="/login/:id"
+							element={
+								<AuthRoute>
+									<LoginOtp />
+								</AuthRoute>
+							}
+						/>
+						<Route
+							path="/verify/:id"
+							element={
+								<AuthRoute>
+									<VerifyOtp />
+								</AuthRoute>
+							}
+						/>
 					</Routes>
 				)}
 			</Router>
