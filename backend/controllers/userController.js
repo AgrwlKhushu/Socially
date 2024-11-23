@@ -540,3 +540,4 @@ export const updateUser = async (req, res) => {
 		Response(res, 500, false, error.message);
 	}
 };
+

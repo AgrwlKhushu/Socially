@@ -24,14 +24,8 @@ const postSchema = mongoose.Schema(
 		],
 		comments: [
 			{
-				comment: {
-					type: String,
-				},
-				owner: {
-					type: mongoose.Schema.Types.ObjectId,
-					ref: "User_Soc",
-					required: true,
-				},
+				type: mongoose.Schema.Types.ObjectId,
+				ref: "Comment",
 			},
 		],
 		owner: {

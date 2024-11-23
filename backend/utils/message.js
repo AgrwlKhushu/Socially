@@ -25,4 +25,11 @@ export const message = {
 	postsFoundMessage: "Posts found",
 	postNotFoundMessage: "No Post found",
 	postFoundMessage: "Post found",
+	commentAddedMessage: "Comment added successfully",
+	commentNotFoundMessage: "No Comment found",
+	commentFoundMessage: "Comment found",
+	replyAddedMessage: "Reply added successfully",
+	replyNotFoundMessage: "No Reply Found",
+	replyFoundMessage: "Reply Found",
+	
 };
